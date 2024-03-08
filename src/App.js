@@ -39,7 +39,7 @@ const router = createHashRouter([
     {path:"*",element:<NotFound/>}
   ]},
   {path:"",element:<AuthLayout/>,children:[
-    {path:"signin",element:<SignIn/>},n
+    {path:"signin",element:<SignIn/>},
     {path:"signup",element:<SignUp/>},
     {path:"forgetpassword",element:<ForgetPassword/>},
     {path:"resetPassword",element:<ResetPassword/>},
