@@ -18,25 +18,19 @@ export default function MainSlider() {
   return (
     <>
       <div className="container w-50 m-auto my-5 d-flex">
-      <Slider className="w-50 " {...settings}>
-      <div >
-        <img src={img1} className="w-100" alt="" />
+        <Slider className="w-50 " {...settings}>
+          <div>
+            <img src={img1} className="w-100" alt="" />
+          </div>
+          <div>
+            <img src={img2} className="w-100" alt="" />
+          </div>
+        </Slider>
+        <div>
+          <img src={img3} alt="" />
+          <img src={img4} alt="" />
+        </div>
       </div>
-      <div>
-      <img src={img2} className="w-100" alt="" />
-      
-
-      </div>
-     
-    </Slider>
-    <div>
-      <img src={img3} alt="" />
-      <img src={img4} alt="" />
-    </div>
-      </div>
- 
-      
-     
     </>
   );
 }

@@ -36,3 +36,15 @@
     transform: rotate(360deg);
   }
 }
+
+.nav-pills .nav-link {
+  /* border-radius: 0; */
+  width: 100%;
+  font-weight: bold;
+  background-color: #d3fad3;
+  color: #35ad35;
+
+}
+.nav-pills .nav-link.active {
+  background-color: #35ad35;
+}

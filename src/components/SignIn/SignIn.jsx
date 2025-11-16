@@ -1,21 +1,22 @@
 import axios from "axios";
 import { useFormik } from "formik";
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import ForgetPassword from "../ForgetPassword/ForgetPassword";
 
 export default function SignIn() {
   let navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
-
+  const [showForgetModal, setShowForgetModal] = useState(false);
   function sendDataToApi(values) {
     setLoading(false);
     axios
       .post("https://ecommerce.routemisr.com/api/v1/auth/signin", values)
       .then(({ data }) => {
         console.log(data);
-        if (data.message == "success") {
+        if (data.message === "success") {
           localStorage.setItem("token", data.token);
           navigate("/home");
         }
@@ -48,57 +49,63 @@ export default function SignIn() {
     },
   });
   return (
-    <div>
-      <div className="w-75 m-auto my-4">
-        <h2>Login</h2>
-        <form onSubmit={login.handleSubmit}>
-          <label htmlFor="email">Email</label>
-          <input
-            onBlur={login.handleBlur}
-            onChange={login.handleChange}
-            value={login.values.email}
-            className="form-control mb-3"
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Enter your email"
-          />
-          <label htmlFor="password">Password</label>
-          <input
-            onBlur={login.handleBlur}
-            onChange={login.handleChange}
-            value={login.values.password}
-            className="form-control mb-3"
-            type="password"
-            id="password"
-            name="password"
-            placeholder="Enter your password"
-          />
-          {login.errors.password && login.touched.password ? (
-            <div className="alert alert-danger">{login.errors.password}</div>
-          ) : (
-            ""
-          )}
+    <div className="my-4">
+      <form onSubmit={login.handleSubmit}>
+        <label htmlFor="email" className="fw-semibold">
+          Email:
+        </label>
+        <input
+          onBlur={login.handleBlur}
+          onChange={login.handleChange}
+          value={login.values.email}
+          className="form-control"
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Enter your email"
+        />
+        {login.errors.email && login.touched.email && (
+          <div className="text-danger fs-6">{login.errors.email}</div>
+        )}
+        <label htmlFor="password" className="fw-semibold mt-4">
+          Password:
+        </label>
+        <input
+          onBlur={login.handleBlur}
+          onChange={login.handleChange}
+          value={login.values.password}
+          className="form-control"
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+        />
+        {login.errors.password && login.touched.password && (
+          <div className="text-danger fs-6">{login.errors.password}</div>
+        )}
 
-          {errorMsg ? (
-            <div className="alert alert-danger">{errorMsg}</div>
-          ) : null}
+        {errorMsg && (
+          <div className="alert alert-danger p-1 mt-2 fs-6">{errorMsg}</div>
+        )}
 
-          <button
-            disabled={!(login.dirty && login.isValid)}
-            type="submit"
-            className="btn bg-main mb-3"
-          >
-            {loading ? "Sign Up" : <i className="fa fa-spinner fa-spin"></i>}
-          </button>
-        </form>
-        <Link
-          className="fw-bolder  pt-4  text-main cursor-pointer "
-          to="/forgetpassword"
+        <button
+          disabled={!(login.dirty && login.isValid)}
+          type="submit"
+          className="btn bg-main my-3 w-100 border-0 text-white"
         >
-          Forgot password
-        </Link>
-      </div>
+          {loading ? "Login" : <i className="fa fa-spinner fa-spin"></i>}
+        </button>
+      </form>
+      <p
+        onClick={() => setShowForgetModal(true)}
+        className="fw-bolder pt-4 text-main cursor-pointer"
+      >
+        Forgot password?
+      </p>
+      <ForgetPassword
+        show={showForgetModal}
+        onClose={() => setShowForgetModal(false)}
+      />
     </div>
   );
 }

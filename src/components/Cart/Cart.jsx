@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { clear } from "@testing-library/user-event/dist/clear";
 
 export default function Cart() {
-  let { getCart, deleteItem, setCounter, updateQuantity, clearAll } =
+  let { getCart, deleteItem, setCounter, updateQuantity } =
     useContext(cartContext);
   let [data, setData] = useState([]);
   let [loading, setLoading] = useState(true);

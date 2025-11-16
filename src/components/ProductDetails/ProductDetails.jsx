@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { cartContext } from "../Context/CartContext";
 import { toast } from "react-toastify";
@@ -9,7 +9,7 @@ export default function ProductDetails() {
   let { id } = useParams();
   let [product, setProduct] = useState({});
   let [btnLoading, setBtnLoading] = useState(false);
-  let { counter, setCounter, addToCart } = useContext(cartContext);
+  let {setCounter, addToCart } = useContext(cartContext);
   var settings = {
     dots: true,
     infinite: true,
@@ -30,7 +30,7 @@ export default function ProductDetails() {
     setBtnLoading(true);
     let data = await addToCart(productId);
     console.log(data);
-    if (data.status == "success") {
+    if (data.status === "success") {
       toast.success(data.message);
       setCounter(data.numOfCartItems);
       setBtnLoading(false);
@@ -39,20 +39,21 @@ export default function ProductDetails() {
   useEffect(() => {
     getProduct();
   }, []);
+
   return (
-    <div>
+    <>
       <div className="container my-5">
         <div className="row">
           <div className="col-md-3">
-          <Slider {...settings}>
-            {product.images?.map((img) => {
-              return (
-                <div>
-                  <img src={img} className="w-100" alt="" />
-                </div>
-              );
-            })}
-        </Slider>
+            <Slider {...settings}>
+              {product.images?.map((img) => {
+                return (
+                  <div>
+                    <img src={img} className="w-100" alt="" />
+                  </div>
+                );
+              })}
+            </Slider>
           </div>
           <div className="col-md-9 d-flex justify-content-center flex-column">
             <div>
@@ -80,6 +81,6 @@ export default function ProductDetails() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
